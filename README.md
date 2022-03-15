@@ -21,5 +21,5 @@ docker push jfernandomg/python:redis-requests
 docker run -d --entrypoint python --name worker --read-only --restart always -u nobody -v $PWD/worker/worker.py:/data/worker.py -w /data/ --network dockercoins jfernandomg/python:redis-requests worker.py
 docker build -t jfernandomg/node:express-redis webui/
 docker push jfernandomg/node:express-redis
-docker run -p -d --entrypoint node --name webui --read-only --restart always -u nobody -v $PWD/webui/webui.js:/data/webui.js -w /data/ --network dockercoins jfernandomg/node:express-redis webui.js
+docker run -p 8080:80 -d --entrypoint node --name webui --read-only --restart always -u nobody -v $PWD/webui/webui.js:/data/webui.js -w /data/ --network dockercoins jfernandomg/node:express-redis webui.js
 ```
