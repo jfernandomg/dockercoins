@@ -15,6 +15,6 @@ docker run  --entrypoint docker-entrypoint.sh --name redis --read-only --rm -u r
 docker build -t jfernandomg/python:flask rng/
 docker push jfernandomg/python:flask
 docker run  --entrypoint python --name rng --read-only --rm -u nobody -v $PWD/rng/rng.py:/data/rng.py -w /data/ --network dockercoins jfernandomg/python:flask rng.py
-docker build -t jfernandomg/python:redis worker/
-docker push jfernandomg/python:redis
-docker run  --entrypoint python --name worker --read-only --rm -u nobody -v $PWD/worker/worker.py:/data/worker.py -w /data/ --network dockercoins jfernandomg/python:redis worker.py
+docker build -t jfernandomg/python:redis-requests worker/
+docker push jfernandomg/python:redis-requests
+docker run  --entrypoint python --name worker --read-only --rm -u nobody -v $PWD/worker/worker.py:/data/worker.py -w /data/ --network dockercoins jfernandomg/python:redis-requests worker.py
