@@ -4,7 +4,6 @@ git clone https://github.com/jfernandomg/dockercoins
 cd dockercoins
 docker network create dockercoins
 docker login
-git pull
 docker build -t jfernandomg/ruby:sinatra-thin hasher/
 docker push jfernandomg/ruby:sinatra-thin
 docker run -d --entrypoint ruby --name hasher --read-only --restart always -u nobody -v $PWD/hasher/hasher.rb:/data/hasher.rb -w /data/ --network dockercoins jfernandomg/ruby:sinatra-thin hasher.rb
