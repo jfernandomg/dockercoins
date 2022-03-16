@@ -12,7 +12,7 @@ services:
     entrypoint:
       -
         ruby
-    enviroment:
+    environment:
       -
         autor: Fernando
     image: jfernandomg/ruby:sinatra-thin
