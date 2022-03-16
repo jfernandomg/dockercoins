@@ -44,4 +44,3 @@ spec:
       path: hasher.rb
     secretName: secret-hasher
     
-status
