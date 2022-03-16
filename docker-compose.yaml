@@ -4,6 +4,13 @@ networks:
 secrets:
   secret-hasher: 
     file: $PWD/hasher/hasher.rb
+  secret-rng: 
+    file: $PWD/rng/rng.py
+  secret-webui: 
+    file: $PWD/webui/webui.js
+  secret-worker: 
+    file: $PWD/worker/worker.py
+ 
 services:
   hasher:
     command:
@@ -27,5 +34,100 @@ services:
         uid: '65534'
     user: nobody
     working_dir: /data/
+  redis:
+    command:
+      - 
+        redis-server
+    entrypoint:
+      -
+        docker-entrypoint.sh
+    environment:
+      autor: Fernando
+    image: jfernandomg/redis:alpine
+    networks:
+      -
+        dockercoins
+    restart: always
+    user: redis
+    volumes:
+      -
+        read_only: false
+        source: volume-redis
+        target: /data/
+        type: volume
+    working_dir: /data/
+  rng:
+    command:
+      - 
+        rng.py
+    entrypoint:
+      -
+        python
+    environment:
+      autor: Fernando
+    image: jfernandomg/python:flask
+    networks:
+      -
+        dockercoins
+    restart: always
+    secrets:
+      -
+        mode: 0400
+        source: secret-rng
+        target: /data/rng.py
+        uid: '65534'
+    user: nobody
+    working_dir: /data/
+  webui:
+    command:
+      - 
+        webui.js
+    entrypoint:
+      -
+        node
+    environment:
+      autor: Fernando
+    image: jfernandomg/node:express-redis
+    networks:
+      -
+        dockercoins
+    ports:
+      -
+        target: 80
+        published: 8080
+        protocol: tcp
+        mode: host
+    restart: always
+    secrets:
+      -
+        mode: 0400
+        source: secret-webui
+        target: /data/webui.js
+        uid: '65534'
+    user: nobody
+    working_dir: /data/
+  :
+    command:
+      - 
+        hasher.rb
+    entrypoint:
+      -
+        ruby
+    environment:
+      autor: Fernando
+    image: jfernandomg/ruby:sinatra-thin
+    networks:
+      -
+        dockercoins
+    restart: always
+    secrets:
+      -
+        mode: 0400
+        source: secret-hasher
+        target: /data/worker.rb
+        uid: '65534'
+    user: nobody
+    working_dir: /data/
+
 version: '3.9'
         
