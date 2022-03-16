@@ -13,8 +13,7 @@ services:
       -
         ruby
     environment:
-      -
-        autor: Fernando
+      autor: Fernando
     image: jfernandomg/ruby:sinatra-thin
     networks:
       -
