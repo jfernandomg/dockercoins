@@ -21,10 +21,27 @@ spec:
     -
      containerPort: 80
      protocol: TCP
+    - 
+     containerPort: 8080
+     protocol: UDP
    volumeMounts:
     -
      mountPath: /data/hasher.rb
      name: volume-hasher
      readOnly: true 
      subPath: hasher.rb
+   workingDir: /data/
+ restartPolicy: Always
+ volumes:
+  -
+   name: volume-hasher
+   secret:
+    defaultMode: 0400
+    items:
+     -
+      key: hasher.rb
+      mode: 0400
+      path: hasher.rb
+    secretName: secret-hasher
+    
 status
