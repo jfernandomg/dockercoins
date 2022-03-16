@@ -106,16 +106,16 @@ services:
         uid: '65534'
     user: nobody
     working_dir: /data/
-  :
+  worker:
     command:
       - 
-        hasher.rb
+        worker.py
     entrypoint:
       -
-        ruby
+        python
     environment:
       autor: Fernando
-    image: jfernandomg/ruby:sinatra-thin
+    image: jfernandomg/python:redis-requests
     networks:
       -
         dockercoins
@@ -123,8 +123,8 @@ services:
     secrets:
       -
         mode: 0400
-        source: secret-hasher
-        target: /data/worker.rb
+        source: secret-worker
+        target: /data/worker.py
         uid: '65534'
     user: nobody
     working_dir: /data/
